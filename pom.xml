@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>com.example</groupId>
-	<artifactId>route-representative</artifactId>
+	<artifactId>most-representative-routes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>route-representative</name>
-	<description>Route Representive</description>
+	<name>most-representative-routes</name>
+	<description>Route Representative</description>
 
 	<properties>
 		<java.version>17</java.version>
