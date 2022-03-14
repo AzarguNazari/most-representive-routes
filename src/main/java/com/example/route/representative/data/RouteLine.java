@@ -1,4 +1,4 @@
-package com.example.route.representative;
+package com.example.route.representative.data;
 
 import java.util.List;
 

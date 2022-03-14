@@ -1,4 +1,4 @@
-package com.example.route.representative;
+package com.example.route.representative.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,8 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Point {
+
     private double x;
     private double y;
     private long epoch;
     private double speed;
+
 }
