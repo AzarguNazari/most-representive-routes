@@ -1,10 +1,13 @@
 package com.example.route.representative.services;
 
-import com.example.route.representative.data.Coordinate;
+import com.example.route.representative.dto.Coordinate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/***
+ * This class generates the GeoJSON text where you see the points on the map (geojson.io)
+ */
 @Service
 public class GeoJsonGenerator {
 

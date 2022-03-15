@@ -1,7 +1,7 @@
 package com.example.route.representative.services;
 
-import com.example.route.representative.data.Point;
-import com.example.route.representative.data.Route;
+import com.example.route.representative.dto.Point;
+import com.example.route.representative.dto.Route;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -17,10 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/***
+ * This class parses the CSV file into records
+ */
+
 @Service
 public class ParseCSVService {
 
-    private static final String SAMPLE_CSV_FILE_PATH = "DEBRV_DEHAM_historical_routes.csv";
     private static final Logger LOGGER = LoggerFactory.getLogger(ParseCSVService.class);
 
     private List<Point> parsePoint(String points){
@@ -55,11 +58,11 @@ public class ParseCSVService {
         return route;
     }
 
-    public List<Route> parseRoutesFromCSV() {
+    public List<Route> parseRoutesFromCSV(String fileName) {
 
         List<Route> routes = new ArrayList<>();
 
-        try (Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
+        try (Reader reader = Files.newBufferedReader(Paths.get(fileName));
              CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT)
         ) {
 

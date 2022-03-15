@@ -1,4 +1,4 @@
-package com.example.route.representative.data;
+package com.example.route.representative.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

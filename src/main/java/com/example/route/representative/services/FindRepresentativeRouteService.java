@@ -1,9 +1,7 @@
 package com.example.route.representative.services;
 
-import com.example.route.representative.data.Coordinate;
-import com.example.route.representative.data.Route;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.route.representative.dto.Coordinate;
+import com.example.route.representative.dto.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/***
+ * This class applies the algorithm to find the most representative route
+ */
 @Service
 public class FindRepresentativeRouteService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(FindRepresentativeRouteService.class);
 
     @Autowired
     private ParseCSVService parseCSVService;
@@ -24,28 +23,31 @@ public class FindRepresentativeRouteService {
     @Autowired
     private GeoJsonGenerator geoJsonGenerator;
 
-    public void findTheMostRepresentativeRoute(){
+    public void findTheMostRepresentativeRoute(String fileName){
 
-        List<Coordinate> debrvToDeham = findAverageCoordinates("DEBRV");
-        List<Coordinate> dehamToDebrv = findAverageCoordinates("DEHAM");
+        Map<String, List<Route>> catagorizeBasedOnPort = categorizeRouteBasedOnDestination(fileName);
 
-        System.out.println(geoJsonGenerator.generateGeoJsonRoute(debrvToDeham));
+        List<Coordinate> debrvToDeham = findAverageCoordinates(catagorizeBasedOnPort, "DEBRV");
+        List<Coordinate> dehamToDebrv = findAverageCoordinates(catagorizeBasedOnPort, "DEHAM");
+
+        String geoJsonDebrvToDeham = geoJsonGenerator.generateGeoJsonRoute(debrvToDeham);
+        String geoJsonDehamToDebrv = geoJsonGenerator.generateGeoJsonRoute(dehamToDebrv);
     }
 
-    private Map<String, List<Route>> categorizeRouteBasedOnDestination(){
-        List<Route> routes = parseCSVService.parseRoutesFromCSV();
+    private Map<String, List<Route>> categorizeRouteBasedOnDestination(String fileName){
+        List<Route> routes = parseCSVService.parseRoutesFromCSV(fileName);
         return routes.stream().collect(Collectors.groupingBy(Route::getFromPort));
     }
 
-    private List<Coordinate> findAverageCoordinates(String from){
+    private List<Coordinate> findAverageCoordinates(Map<String, List<Route>> port, String from){
 
-        List<Route> routes = categorizeRouteBasedOnDestination().get(from);  // Get Route from DEBRV -> DEHAM
-        routes.sort(Comparator.comparingInt(Route::getCount));                  // Sort Ascending Order
+        List<Route> routes = port.get(from);                                                       // Get Route from A -> D
+        routes.sort(Comparator.comparingInt(Route::getCount));                                     // Sort Ascending Order
 
-        int maxLenght = routes.get(routes.size() - 1).getCount();   // Find Max # of Points in route from DEBRV -> DEHAM
+        int maxLenght = routes.get(routes.size() - 1).getCount();                                  // Find Max # of Points in route from DEBRV -> DEHAM
         List<Coordinate> averageCoordinates = new ArrayList<>();
 
-        for(int i = 0; i < maxLenght; i++) averageCoordinates.add(new Coordinate(0, 0));                   // Fill Array with point objects for storage average points
+        for(int i = 0; i < maxLenght; i++) averageCoordinates.add(new Coordinate(0, 0));   // Fill Array with point objects for storage average points
 
         for(int routeIndex = 0; routeIndex < routes.size(); routeIndex++){
 

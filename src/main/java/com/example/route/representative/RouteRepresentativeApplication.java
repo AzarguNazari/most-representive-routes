@@ -13,13 +13,15 @@ public class RouteRepresentativeApplication implements ApplicationRunner {
 	@Autowired
 	private FindRepresentativeRouteService findRepresentativeRouteService;
 
+	private static final String SAMPLE_CSV_FILE_PATH = "DEBRV_DEHAM_historical_routes.csv";
+
 	public static void main(String[] args) {
 		SpringApplication.run(RouteRepresentativeApplication.class, args);
 	}
 
 	@Override
 	public void run(ApplicationArguments args) {
-		findRepresentativeRouteService.findTheMostRepresentativeRoute();
+		findRepresentativeRouteService.findTheMostRepresentativeRoute(SAMPLE_CSV_FILE_PATH);
 	}
 
 }
