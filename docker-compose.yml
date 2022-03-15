@@ -1,0 +1,5 @@
+version: '3.7'
+
+services:
+  most-representative-route:
+    image: "nazariazargul/most-representative-route:latest"
