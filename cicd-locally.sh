@@ -10,7 +10,10 @@ echo "|-------------------------------------------------------------------------
 if [ "$JAVA_VERSION" = "17" ]
 then
 
-  # Create Docker Image of application
+  # Run the tests
+  ./mvnw test
+
+  # Build Docker Image
   ./mvnw spring-boot:build-image
 
   ARTIFACT="$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.artifactId -q -DforceStdout)"
