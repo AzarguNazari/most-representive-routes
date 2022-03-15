@@ -41,13 +41,13 @@ public class FindRepresentativeRouteService {
 
     private List<Coordinate> findAverageCoordinates(Map<String, List<Route>> port, String from){
 
-        List<Route> routes = port.get(from);                                                       // Get Route from A -> D
+        List<Route> routes = port.get(from);                                                       // Get Route from S -> D
         routes.sort(Comparator.comparingInt(Route::getCount));                                     // Sort Ascending Order
 
         int maxLenght = routes.get(routes.size() - 1).getCount();                                  // Find Max # of Points in route from DEBRV -> DEHAM
         List<Coordinate> averageCoordinates = new ArrayList<>();
 
-        for(int i = 0; i < maxLenght; i++) averageCoordinates.add(new Coordinate(0, 0));   // Fill Array with point objects for storage average points
+        for(int i = 0; i < maxLenght; i++) averageCoordinates.add(new Coordinate(0, 0));      // Fill Array with point objects for storage average points
 
         for(int routeIndex = 0; routeIndex < routes.size(); routeIndex++){
 
