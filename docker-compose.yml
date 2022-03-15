@@ -3,3 +3,5 @@ version: '3.7'
 services:
   most-representative-route:
     image: "nazariazargul/most-representative-route:latest"
+    volumes:
+      - "./DEBRV_DEHAM_historical_routes.csv:/DEBRV_DEHAM_historical_routes.csv"
