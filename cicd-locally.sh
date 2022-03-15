@@ -17,6 +17,8 @@ then
   VERSION="$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)"
 
   docker tag "$ARTIFACT:$VERSION" "nazariazargul/most-representative-route:latest"
+
+  # Push to DockerHub
   docker push "nazariazargul/most-representative-route:latest"
 
 
