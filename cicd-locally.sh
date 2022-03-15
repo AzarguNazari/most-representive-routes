@@ -26,5 +26,5 @@ then
   echo "service are running..."
 
 else
-  echo "Please change your java version to 11"
+  echo "Please change your java version to 17"
 fi
