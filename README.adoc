@@ -26,12 +26,6 @@ Average Point 1 = (Point1x, Point1y)
 ./mvnw spring-boot:run
 ```
 
-## How to dockerized it?
-
-```shell
-./mvnw spring-boot:build-image
-```
-
 ## CI/CD Locally
 
 To run the CI/CD locally:
@@ -39,3 +33,9 @@ To run the CI/CD locally:
 ./cicd-locally.sh
 ```
 It first builds the docker images out of the application, then push to the public docker registry, and then run the container using `Docker Compose`.
+
+## How to dockerized it?
+
+```shell
+./mvnw spring-boot:build-image
+```
