@@ -26,11 +26,11 @@ Average Point 1 = (Point1x, Point1y)
 ./mvnw spring-boot:run
 ```
 
-## CI/CD Locally
+## Run CI/CD Locally
 
 To run the CI/CD locally:
 ```shell
-./cicd-locally.sh
+./local-cicd.sh
 ```
 It first builds the docker images out of the application, then push to the public docker registry, and then run the container using `Docker Compose`.
 
