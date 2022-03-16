@@ -1,17 +1,4 @@
 package com.example.route.representative.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public record Point(double x, double y, long epoch, double speed){}
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Point {
-
-    private double x;
-    private double y;
-    private long epoch;
-    private double speed;
-
-}

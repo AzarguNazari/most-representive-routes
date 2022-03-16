@@ -53,8 +53,8 @@ public record FindRepresentativeRouteService(ParseCSVService parseCSVService, Ge
             int pointsCount = route.getLinePoints().size();
 
             for (int pointIndex = 0; pointIndex < pointsCount; pointIndex++) {
-                averageCoordinates.get(pointIndex).setX((averageCoordinates.get(pointIndex).getX() + route.getLinePoints().get(pointIndex).getX()) / 2);
-                averageCoordinates.get(pointIndex).setY((averageCoordinates.get(pointIndex).getY() + route.getLinePoints().get(pointIndex).getY()) / 2);
+                averageCoordinates.get(pointIndex).setX((averageCoordinates.get(pointIndex).getX() + route.getLinePoints().get(pointIndex).x()) / 2);
+                averageCoordinates.get(pointIndex).setY((averageCoordinates.get(pointIndex).getY() + route.getLinePoints().get(pointIndex).y()) / 2);
             }
         }
 

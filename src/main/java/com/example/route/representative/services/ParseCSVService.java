@@ -43,19 +43,14 @@ public class ParseCSVService {
     }
 
     private Route parseLine(CSVRecord csvRow){
-
-        Route route = new Route();
-
-        route.setId(csvRow.get(0));
-        route.setFromSeq(csvRow.get(1));
-        route.setToSeq(csvRow.get(2));
-        route.setFromPort(csvRow.get(3));
-        route.setToPort(csvRow.get(4));
-        route.setLegDuration(Integer.parseInt(csvRow.get(5)));
-        route.setCount(Integer.parseInt(csvRow.get(6)));
-        route.setLinePoints(parsePoint(csvRow.get(7)));
-
-        return route;
+        return new Route(csvRow.get(0),
+                         csvRow.get(1),
+                         csvRow.get(2),
+                         csvRow.get(3),
+                         csvRow.get(4),
+                         Integer.parseInt(csvRow.get(5)),
+                         Integer.parseInt(csvRow.get(6)),
+                         parsePoint(csvRow.get(7)));
     }
 
     public List<Route> parseRoutesFromCSV(String fileName) {
