@@ -2,7 +2,8 @@ package com.example.route.representative.services;
 
 import com.example.route.representative.dto.Coordinate;
 import com.example.route.representative.dto.Route;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,23 +16,21 @@ import java.util.stream.Collectors;
  * This class applies the algorithm to find the most representative route
  */
 @Service
-public class FindRepresentativeRouteService {
+public record FindRepresentativeRouteService(ParseCSVService parseCSVService, GeoJsonGenerator geoJsonGenerator){
 
-    @Autowired
-    private ParseCSVService parseCSVService;
-
-    @Autowired
-    private GeoJsonGenerator geoJsonGenerator;
+    private static final Logger LOGGER = LoggerFactory.getLogger(FindRepresentativeRouteService.class);
 
     public void findTheMostRepresentativeRoute(String fileName){
 
-        Map<String, List<Route>> catagorizeBasedOnPort = categorizeRouteBasedOnDestination(fileName);
+        Map<String, List<Route>> categorizedBasedOnPort = categorizeRouteBasedOnDestination(fileName);
 
-        List<Coordinate> debrvToDeham = findAverageCoordinates(catagorizeBasedOnPort, "DEBRV");
-        List<Coordinate> dehamToDebrv = findAverageCoordinates(catagorizeBasedOnPort, "DEHAM");
+        List<Coordinate> debrvToDeham = findAverageCoordinates(categorizedBasedOnPort, "DEBRV");
+        List<Coordinate> dehamToDebrv = findAverageCoordinates(categorizedBasedOnPort, "DEHAM");
 
         String geoJsonDebrvToDeham = geoJsonGenerator.generateGeoJsonRoute(debrvToDeham);
         String geoJsonDehamToDebrv = geoJsonGenerator.generateGeoJsonRoute(dehamToDebrv);
+
+        LOGGER.debug("Most Representative Path from DEBRV to DEHAM {}", dehamToDebrv);
     }
 
     private Map<String, List<Route>> categorizeRouteBasedOnDestination(String fileName){
@@ -49,13 +48,13 @@ public class FindRepresentativeRouteService {
 
         for(int i = 0; i < maxLenght; i++) averageCoordinates.add(new Coordinate(0, 0));      // Fill Array with point objects for storage average points
 
-        for(int routeIndex = 0; routeIndex < routes.size(); routeIndex++){
+        for (Route route : routes) {
 
-            int pointsCount = routes.get(routeIndex).getLinePoints().size();
+            int pointsCount = route.getLinePoints().size();
 
-            for(int pointIndex = 0; pointIndex < pointsCount; pointIndex++){
-                averageCoordinates.get(pointIndex).setX((averageCoordinates.get(pointIndex).getX() + routes.get(routeIndex).getLinePoints().get(pointIndex).getX())/2);
-                averageCoordinates.get(pointIndex).setY((averageCoordinates.get(pointIndex).getY() + routes.get(routeIndex).getLinePoints().get(pointIndex).getY())/2);
+            for (int pointIndex = 0; pointIndex < pointsCount; pointIndex++) {
+                averageCoordinates.get(pointIndex).setX((averageCoordinates.get(pointIndex).getX() + route.getLinePoints().get(pointIndex).getX()) / 2);
+                averageCoordinates.get(pointIndex).setY((averageCoordinates.get(pointIndex).getY() + route.getLinePoints().get(pointIndex).getY()) / 2);
             }
         }
 
