@@ -62,7 +62,7 @@ public class ParseCSVService {
         ) {
 
             List<CSVRecord> records = csvParser.getRecords();
-            records.subList(1, records.size() - 1).forEach(record -> routes.add(parseLine(record)));
+            records.subList(1, records.size()).forEach(record -> routes.add(parseLine(record)));
 
         } catch (IOException ex) {
             LOGGER.error("Some error happened {}", ex.getMessage());
