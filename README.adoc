@@ -6,12 +6,15 @@ This repository contains an experiment to find the most representative route fro
 
 image::doc/algorithm.jpg[]
 
-Suppose there is Source (S), Destination (D), and routes (A, B, C, D, E). To find an average or a representative path between S -> D, we take the everage of points, e.g,
+Suppose there is Source (S), Destination (D), and routes (A, B, C, D, E, ...). To find representative route, we take the average of route points from S -> D. As you can see the generic formula below:
 ```shell
 Point1x = (A1x + B1x + C1x + D1x + E1x + ...) / Total Routes
 Point1y = (A1y + B1y + C1y + D1y + E1y + ...) / Total Routes
 
 Average Point 1 = (Point1x, Point1y)
+Average Point 2 = (...)
+....
+Average Point n
 ```
 
 ## Technologies
